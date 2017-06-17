@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.cmake": "cpp",
+        "*h*h*h*c*c*h*h*c*c*crandom": "cpp",
+        "random": "cpp",
+        "*h*h*h*h*h*h*h*hxiosbase": "cpp",
+        "xiosbase": "cpp"
+    }
+}

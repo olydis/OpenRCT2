@@ -178,7 +178,7 @@ sint32 bitscanforward(sint32 source)
 static bool bitcount_popcnt_available()
 {
 	// POPCNT support is declared as the 23rd bit of ECX with CPUID(EAX = 1).
-	#if defined(OpenRCT2_POPCNT_GNUC)
+	#if 0
 		// we could use __builtin_cpu_supports, but it requires runtime support from
 		// the compiler's library, which clang doesn't have yet.
 		uint32 eax, ebx, ecx = 0, edx; // avoid "maybe uninitialized"
@@ -195,7 +195,7 @@ static bool bitcount_popcnt_available()
 
 static sint32 bitcount_popcnt(uint32 source)
 {
-	#if defined(OpenRCT2_POPCNT_GNUC)
+	#if 0
 		// use asm directly in order to actually emit the instruction : using
 		// __builtin_popcount results in an extra call to a library function.
 		sint32 rv;
