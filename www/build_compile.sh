@@ -9,7 +9,7 @@ build_c() {
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull -DDEBUG=0 \
+        -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
@@ -22,7 +22,7 @@ build_cpp() {
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull -DDEBUG=0 \
+        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC  \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -c ../src/openrct2/$1.cpp
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || echo nf
@@ -35,7 +35,7 @@ opt_build_c() {
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull -DDEBUG=0 \
+        -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
@@ -48,7 +48,7 @@ opt_build_cpp() {
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull -DDEBUG=0 \
+        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -c ../src/openrct2/$1.cpp
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || echo nf
@@ -84,17 +84,17 @@ build_cpp         core/String
 build_c           core/textinputbuffer
 build_cpp         core/Zip
 build_c           diagnostic
-opt_build_c           drawing/drawing
+opt_build_c       drawing/drawing
 opt_build_cpp     drawing/drawing_fast
-opt_build_c           drawing/font
-opt_build_cpp         drawing/Image
-opt_build_c           drawing/lightfx
-opt_build_c           drawing/line
-opt_build_cpp         drawing/NewDrawing
-opt_build_cpp         drawing/Rain
-opt_build_c           drawing/rect
+opt_build_c       drawing/font
+opt_build_cpp     drawing/Image
+opt_build_c       drawing/lightfx
+opt_build_c       drawing/line
+opt_build_cpp     drawing/NewDrawing
+opt_build_cpp     drawing/Rain
+opt_build_c       drawing/rect
 build_c           drawing/scrolling_text
-opt_build_cpp         drawing/sprite
+opt_build_cpp     drawing/sprite
 opt_build_c       drawing/string
 build_c           editor
 build_cpp         FileClassifier
@@ -170,12 +170,12 @@ build_c           paint/map_element/scenery
 build_c           paint/map_element/scenery_multiple
 build_c           paint/map_element/surface
 opt_build_c       paint/paint
-opt_build_c           paint/paint_helpers
-opt_build_c           paint/sprite/litter
-opt_build_c           paint/sprite/misc
-opt_build_c           paint/sprite/peep
-opt_build_c           paint/sprite/sprite
-opt_build_c           paint/supports
+opt_build_c       paint/paint_helpers
+opt_build_c       paint/sprite/litter
+opt_build_c       paint/sprite/misc
+opt_build_c       paint/sprite/peep
+opt_build_c       paint/sprite/sprite
+opt_build_c       paint/supports
 build_cpp         ParkImporter
 build_c           peep/peep
 build_c           peep/peep_data
@@ -200,94 +200,94 @@ build_c           rct2/interop
 build_cpp         rct2/S6Exporter
 build_cpp         rct2/S6Importer
 build_c           rct2
-opt_build_c           ride/cable_lift
-opt_build_c           ride/coaster/air_powered_vertical_coaster
-opt_build_c           ride/coaster/bobsleigh_coaster
-opt_build_c           ride/coaster/bolliger_mabillard_track
-opt_build_c           ride/coaster/compact_inverted_coaster
-opt_build_c           ride/coaster/corkscrew_roller_coaster
-opt_build_c           ride/coaster/flying_roller_coaster
-opt_build_c           ride/coaster/giga_coaster
-opt_build_c           ride/coaster/heartline_twister_coaster
-opt_build_c           ride/coaster/inverted_hairpin_coaster
-opt_build_c           ride/coaster/inverted_impulse_coaster
-opt_build_c           ride/coaster/inverted_roller_coaster
-opt_build_c           ride/coaster/junior_roller_coaster
-opt_build_c           ride/coaster/lay_down_roller_coaster
-opt_build_c           ride/coaster/lim_launched_roller_coaster
-opt_build_c           ride/coaster/looping_roller_coaster
-opt_build_c           ride/coaster/mine_ride
-opt_build_c           ride/coaster/mine_train_coaster
-opt_build_c           ride/coaster/mini_roller_coaster
-opt_build_c           ride/coaster/mini_suspended_coaster
-opt_build_c           ride/coaster/multi_dimension_roller_coaster
-opt_build_c           ride/coaster/reverser_roller_coaster
-opt_build_c           ride/coaster/reverse_freefall_coaster
-opt_build_c           ride/coaster/side_friction_roller_coaster
-opt_build_c           ride/coaster/stand_up_roller_coaster
-opt_build_c           ride/coaster/steeplechase
-opt_build_c           ride/coaster/suspended_swinging_coaster
-opt_build_c           ride/coaster/twister_roller_coaster
-opt_build_c           ride/coaster/vertical_drop_roller_coaster
-opt_build_c           ride/coaster/virginia_reel
-opt_build_c           ride/coaster/wild_mouse
-opt_build_c           ride/coaster/wooden_roller_coaster
-opt_build_c           ride/coaster/wooden_wild_mouse
-opt_build_c           ride/gentle/car_ride
-opt_build_c           ride/gentle/circus_show
-opt_build_c           ride/gentle/crooked_house
-opt_build_c           ride/gentle/dodgems
-opt_build_c           ride/gentle/ferris_wheel
-opt_build_c           ride/gentle/flying_saucers
-opt_build_c           ride/gentle/ghost_train
-opt_build_c           ride/gentle/haunted_house
-opt_build_c           ride/gentle/maze
-opt_build_c           ride/gentle/merry_go_round
-opt_build_c           ride/gentle/mini_golf
-opt_build_c           ride/gentle/mini_helicopters
-opt_build_c           ride/gentle/monorail_cycles
-opt_build_c           ride/gentle/observation_tower
-opt_build_c           ride/gentle/space_rings
-opt_build_c           ride/gentle/spiral_slide
-opt_build_c           ride/ride
-opt_build_c           ride/ride_data
-opt_build_c           ride/ride_ratings
-opt_build_c           ride/shops/facility
-opt_build_c           ride/shops/shop
-opt_build_c           ride/station
-opt_build_c           ride/thrill/3d_cinema
-opt_build_c           ride/thrill/enterprise
-opt_build_c           ride/thrill/go_karts
-opt_build_c           ride/thrill/launched_freefall
-opt_build_c           ride/thrill/magic_carpet
-opt_build_c           ride/thrill/motion_simulator
-opt_build_c           ride/thrill/pirate_ship
-opt_build_c           ride/thrill/roto_drop
-opt_build_c           ride/thrill/swinging_inverter_ship
-opt_build_c           ride/thrill/top_spin
-opt_build_c           ride/thrill/twist
-opt_build_c           ride/track
-opt_build_cpp         ride/TrackDesignRepository
-opt_build_c           ride/track_data
-opt_build_c           ride/track_data_old
-opt_build_c           ride/track_design
-opt_build_c           ride/track_design_save
-opt_build_c           ride/track_paint
-opt_build_c           ride/transport/chairlift
-opt_build_c           ride/transport/lift
-opt_build_c           ride/transport/miniature_railway
-opt_build_c           ride/transport/monorail
-opt_build_c           ride/transport/suspended_monorail
-opt_build_c           ride/vehicle
-opt_build_c           ride/vehicle_data
-opt_build_c           ride/vehicle_paint
-opt_build_c           ride/water/boat_ride
-opt_build_c           ride/water/dingy_slide
-opt_build_c           ride/water/log_flume
-opt_build_c           ride/water/river_rapids
-opt_build_c           ride/water/splash_boats
-opt_build_c           ride/water/submarine_ride
-opt_build_c           ride/water/water_coaster
+opt_build_c       ride/cable_lift
+opt_build_c       ride/coaster/air_powered_vertical_coaster
+opt_build_c       ride/coaster/bobsleigh_coaster
+opt_build_c       ride/coaster/bolliger_mabillard_track
+opt_build_c       ride/coaster/compact_inverted_coaster
+opt_build_c       ride/coaster/corkscrew_roller_coaster
+opt_build_c       ride/coaster/flying_roller_coaster
+opt_build_c       ride/coaster/giga_coaster
+opt_build_c       ride/coaster/heartline_twister_coaster
+opt_build_c       ride/coaster/inverted_hairpin_coaster
+opt_build_c       ride/coaster/inverted_impulse_coaster
+opt_build_c       ride/coaster/inverted_roller_coaster
+opt_build_c       ride/coaster/junior_roller_coaster
+opt_build_c       ride/coaster/lay_down_roller_coaster
+opt_build_c       ride/coaster/lim_launched_roller_coaster
+opt_build_c       ride/coaster/looping_roller_coaster
+opt_build_c       ride/coaster/mine_ride
+opt_build_c       ride/coaster/mine_train_coaster
+opt_build_c       ride/coaster/mini_roller_coaster
+opt_build_c       ride/coaster/mini_suspended_coaster
+opt_build_c       ride/coaster/multi_dimension_roller_coaster
+opt_build_c       ride/coaster/reverser_roller_coaster
+opt_build_c       ride/coaster/reverse_freefall_coaster
+opt_build_c       ride/coaster/side_friction_roller_coaster
+opt_build_c       ride/coaster/stand_up_roller_coaster
+opt_build_c       ride/coaster/steeplechase
+opt_build_c       ride/coaster/suspended_swinging_coaster
+opt_build_c       ride/coaster/twister_roller_coaster
+opt_build_c       ride/coaster/vertical_drop_roller_coaster
+opt_build_c       ride/coaster/virginia_reel
+opt_build_c       ride/coaster/wild_mouse
+opt_build_c       ride/coaster/wooden_roller_coaster
+opt_build_c       ride/coaster/wooden_wild_mouse
+opt_build_c       ride/gentle/car_ride
+opt_build_c       ride/gentle/circus_show
+opt_build_c       ride/gentle/crooked_house
+opt_build_c       ride/gentle/dodgems
+opt_build_c       ride/gentle/ferris_wheel
+opt_build_c       ride/gentle/flying_saucers
+opt_build_c       ride/gentle/ghost_train
+opt_build_c       ride/gentle/haunted_house
+opt_build_c       ride/gentle/maze
+opt_build_c       ride/gentle/merry_go_round
+opt_build_c       ride/gentle/mini_golf
+opt_build_c       ride/gentle/mini_helicopters
+opt_build_c       ride/gentle/monorail_cycles
+opt_build_c       ride/gentle/observation_tower
+opt_build_c       ride/gentle/space_rings
+opt_build_c       ride/gentle/spiral_slide
+opt_build_c       ride/ride
+opt_build_c       ride/ride_data
+opt_build_c       ride/ride_ratings
+opt_build_c       ride/shops/facility
+opt_build_c       ride/shops/shop
+opt_build_c       ride/station
+opt_build_c       ride/thrill/3d_cinema
+opt_build_c       ride/thrill/enterprise
+opt_build_c       ride/thrill/go_karts
+opt_build_c       ride/thrill/launched_freefall
+opt_build_c       ride/thrill/magic_carpet
+opt_build_c       ride/thrill/motion_simulator
+opt_build_c       ride/thrill/pirate_ship
+opt_build_c       ride/thrill/roto_drop
+opt_build_c       ride/thrill/swinging_inverter_ship
+opt_build_c       ride/thrill/top_spin
+opt_build_c       ride/thrill/twist
+opt_build_c       ride/track
+opt_build_cpp     ride/TrackDesignRepository
+opt_build_c       ride/track_data
+opt_build_c       ride/track_data_old
+opt_build_c       ride/track_design
+opt_build_c       ride/track_design_save
+opt_build_c       ride/track_paint
+opt_build_c       ride/transport/chairlift
+opt_build_c       ride/transport/lift
+opt_build_c       ride/transport/miniature_railway
+opt_build_c       ride/transport/monorail
+opt_build_c       ride/transport/suspended_monorail
+opt_build_c       ride/vehicle
+opt_build_c       ride/vehicle_data
+opt_build_c       ride/vehicle_paint
+opt_build_c       ride/water/boat_ride
+opt_build_c       ride/water/dingy_slide
+opt_build_c       ride/water/log_flume
+opt_build_c       ride/water/river_rapids
+opt_build_c       ride/water/splash_boats
+opt_build_c       ride/water/submarine_ride
+opt_build_c       ride/water/water_coaster
 build_c           scenario/scenario
 build_cpp         scenario/ScenarioRepository
 build_cpp         scenario/ScenarioSources
@@ -415,4 +415,4 @@ llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.o -o ../
 llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.ll || echo nf
 llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.ll || echo nf
 
-emcc ../src/bindings.cpp -std=c++11 -o ../build/bindings.ll -S -emit-llvm -stdlib=libc++
+emcc ../src/bindings.cpp -std=c++11 -o ../build/bindings.ll -I/usr/include/SDL2 -S -emit-llvm -stdlib=libc++

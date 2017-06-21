@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+# emcc ../src/patches.cpp -std=c++11 -o ../build/patches.js -I/usr/include/SDL2 -stdlib=libc++
+
 emcc \
     ../build/bindings.ll \
     ../build/CMakeFiles/libopenrct2.dir/src/openrct2/audio/audio.cpp.ll \
@@ -341,15 +343,17 @@ emcc \
     ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.ll \
     ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.ll \
     -o openrct2.js --memory-init-file 1 \
-    --js-transform "sed -i -e 's/_dlopen(filename, flag) {/_dlopen(filename, flag) {return 0;/g' -e 's/function _Blit1to4(/function _Blit1to4x(/g' -e 's/__ZN8OpenRCT27Context11RunGameLoopEv(\$0) {/__ZN8OpenRCT27Context11RunGameLoopEv(\$0) {window.dispatchEvent(new Event(\"resize\"));setInterval(function(){__ZN8OpenRCT27Context16RunVariableFrameEv(\$0)},16);throw 42;/g'" \
+    --js-transform "sed -i -e 's/,_Emscripten_CreateCursor_....,/,_Emscripten_CreateCursor,/g' -e 's/_dlopen(filename, flag) {/_dlopen(filename, flag) {return 0;/g' -e 's/function _Blit1to4(/function _Blit1to4x(/g' -e 's/__ZN8OpenRCT27Context11RunGameLoopEv(\$0) {/__ZN8OpenRCT27Context11RunGameLoopEv(\$0) {window.dispatchEvent(new Event(\"resize\"));setInterval(function(){__ZN8OpenRCT27Context16RunVariableFrameEv(\$0)},16);throw 42;/g'" \
     -s USE_SDL=2 \
-    -s ALLOW_MEMORY_GROWTH=1 \
+    -s TOTAL_MEMORY=512*1024*1024 \
     -s DISABLE_EXCEPTION_CATCHING=0 \
     -s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
     -s ELIMINATE_DUPLICATE_FUNCTIONS=1 \
+    -s "EXPORTED_FUNCTIONS=['_main','_malloc','_Emscripten_CreateCursor']" \
     -O1
 
-    # -s TOTAL_MEMORY=512*1024*1024 \
+
+    # -s ALLOW_MEMORY_GROWTH=1 \
 
     # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/network/NetworkAction.cpp.ll \
     # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/network/NetworkConnection.cpp.ll \
