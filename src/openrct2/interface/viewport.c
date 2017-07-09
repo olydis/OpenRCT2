@@ -1417,9 +1417,9 @@ void viewport_invalidate(rct_viewport *viewport, sint32 left, sint32 top, sint32
 
 	sint32 viewportLeft = viewport->view_x;
 	sint32 viewportTop = viewport->view_y;
-	sint32 viewportRight = viewport->view_x + viewport->view_width;
-	sint32 viewportBottom = viewport->view_y + viewport->view_height;
 	if (right > viewportLeft && bottom > viewportTop) {
+		sint32 viewportRight = viewport->view_x + viewport->view_width;
+		sint32 viewportBottom = viewport->view_y + viewport->view_height;
 		left = max(left, viewportLeft);
 		top = max(top, viewportTop);
 		right = min(right, viewportRight);
@@ -1591,7 +1591,7 @@ void screen_get_map_xy_side_with_z(sint16 screenX, sint16 screenY, sint16 z, sin
  *
  * @returns rotation in range 0-3 (inclusive)
  */
-uint8 get_current_rotation()
+inline uint8 get_current_rotation()
 {
 	uint8 rotation = gCurrentRotation;
 	uint8 rotation_masked = rotation & 3;
@@ -1603,7 +1603,7 @@ uint8 get_current_rotation()
 	return rotation_masked;
 }
 
-sint16 get_height_marker_offset()
+inline sint16 get_height_marker_offset()
 {
 	// Height labels in units
 	if (gConfigGeneral.show_height_as_units)

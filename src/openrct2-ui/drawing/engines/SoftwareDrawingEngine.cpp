@@ -369,11 +369,11 @@ public:
     void Invalidate(sint32 left, sint32 top, sint32 right, sint32 bottom) override
     {
         left = Math::Max(left, 0);
-        top = Math::Max(top, 0);
         right = Math::Min(right, (sint32)_width);
-        bottom = Math::Min(bottom, (sint32)_height);
-
         if (left >= right) return;
+
+        top = Math::Max(top, 0);
+        bottom = Math::Min(bottom, (sint32)_height);
         if (top >= bottom) return;
 
         right--;
@@ -1076,25 +1076,25 @@ void SoftwareDrawingContext::FilterRect(FILTER_PALETTE_ID palette, sint32 left, 
         endY = dpi->height;
     }
 
-    sint32 width = endX - startX;
-    sint32 height = endY - startY;
+    uint16 zoom_level = dpi->zoom_level;
+    uint16 pitched = (dpi->width >> zoom_level) + dpi->pitch;
 
+    sint32 width = (endX - startX) >> zoom_level;
+    sint32 height = (endY - startY) >> zoom_level;
 
     //0x2000000
     // 00678B7E   00678C83
     // Location in screen buffer?
-    uint8 * dst = dpi->bits + (uint32)((startY >> (dpi->zoom_level)) * ((dpi->width >> dpi->zoom_level) + dpi->pitch) + (startX >> dpi->zoom_level));
+    uint8 * dst = dpi->bits + (uint32)((startY >> zoom_level) * pitched + (startX >> zoom_level));
 
     // Find colour in colour table?
-    uint16           g1Index = palette_to_g1_offset[palette];
-    rct_g1_element * g1Element = &g1Elements[g1Index];
-    uint8 *          g1Bits = g1Element->offset;
+    uint8 *          g1Bits = g1Elements[palette_to_g1_offset[palette]].offset;
 
     // Fill the rectangle with the colours from the colour table
-    for (sint32 i = 0; i < height >> dpi->zoom_level; i++)
+    for (sint32 i = 0; i < height; i++)
     {
-        uint8 * nextdst = dst + (dpi->width >> dpi->zoom_level) + dpi->pitch;
-        for (sint32 j = 0; j < (width >> dpi->zoom_level); j++)
+        uint8 * nextdst = dst + pitched;
+        for (sint32 j = 0; j < width; j++)
         {
             *dst = g1Bits[*dst];
             dst++;
