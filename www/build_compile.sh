@@ -10,7 +10,7 @@ build_c() {
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
-        -fPIC \
+        -fPIC -fno-exceptions \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
 }
@@ -18,12 +18,12 @@ build_cpp() {
     echo $1
     emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
-        -stdlib=libc++ -std=gnu++14 -S -emit-llvm -O3 -fmax-type-align=1 \
+        -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
-        -fPIC  \
+        -fPIC -O3 \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -c ../src/openrct2/$1.cpp
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || echo nf
 }
@@ -36,28 +36,28 @@ opt_build_c() {
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
-        -fPIC -O3 \
+        -fPIC -O3 -fno-exceptions \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
 }
-opt_build_cpp() {
+optx_build_c() {
     echo $1
-    emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
+    emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
-        -stdlib=libc++ -std=gnu++14 -S -emit-llvm -O3 -fmax-type-align=1 \
+        -std=gnu11 -S -emit-llvm \
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
-        -fPIC -O3 \
-        -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -c ../src/openrct2/$1.cpp
-    llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || echo nf
+        -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
+        -fPIC -O3 -fno-exceptions --llvm-lto 1 \
+        -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
+    llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
 }
 
-opt_build_cpp         audio/audio
-opt_build_cpp         audio/AudioMixer
-opt_build_cpp         audio/DummyAudioContext
-opt_build_cpp         audio/NullAudioSource
+build_cpp         audio/audio
+build_cpp         audio/AudioMixer
+build_cpp         audio/DummyAudioContext
+build_cpp         audio/NullAudioSource
 build_c           cheats
 build_cpp         cmdline/CommandLine
 build_cpp         cmdline/ConvertCommand
@@ -85,16 +85,16 @@ build_c           core/textinputbuffer
 build_cpp         core/Zip
 build_c           diagnostic
 opt_build_c       drawing/drawing
-opt_build_cpp     drawing/drawing_fast
+build_cpp         drawing/drawing_fast
 opt_build_c       drawing/font
-opt_build_cpp     drawing/Image
+build_cpp         drawing/Image
 opt_build_c       drawing/lightfx
 opt_build_c       drawing/line
-opt_build_cpp     drawing/NewDrawing
-opt_build_cpp     drawing/Rain
+build_cpp         drawing/NewDrawing
+build_cpp         drawing/Rain
 opt_build_c       drawing/rect
 build_c           drawing/scrolling_text
-opt_build_cpp     drawing/sprite
+build_cpp         drawing/sprite
 opt_build_c       drawing/string
 build_c           editor
 build_cpp         FileClassifier
@@ -118,8 +118,8 @@ opt_build_c       localisation/convert
 opt_build_c       localisation/currency
 opt_build_c       localisation/date
 opt_build_c       localisation/format_codes
-opt_build_cpp     localisation/language
-opt_build_cpp     localisation/LanguagePack
+build_cpp         localisation/language
+build_cpp         localisation/LanguagePack
 opt_build_c       localisation/localisation
 opt_build_c       localisation/real_names
 opt_build_c       localisation/user
@@ -159,16 +159,16 @@ build_cpp         object/StexObject
 build_cpp         object/StringTable
 build_cpp         object/WallObject
 build_cpp         object/WaterObject
-build_c           object_list
+opt_build_c       object_list
 build_cpp         OpenRCT2
 build_c           paint/map_element/banner
-build_c           paint/map_element/entrance
-build_c           paint/map_element/fence
+opt_build_c       paint/map_element/entrance
+opt_build_c       paint/map_element/fence
 opt_build_c       paint/map_element/map_element
-build_c           paint/map_element/path
-build_c           paint/map_element/scenery
-build_c           paint/map_element/scenery_multiple
-build_c           paint/map_element/surface
+opt_build_c       paint/map_element/path
+opt_build_c       paint/map_element/scenery
+opt_build_c       paint/map_element/scenery_multiple
+opt_build_c       paint/map_element/surface
 opt_build_c       paint/paint
 opt_build_c       paint/paint_helpers
 opt_build_c       paint/sprite/litter
@@ -177,16 +177,16 @@ opt_build_c       paint/sprite/peep
 opt_build_c       paint/sprite/sprite
 opt_build_c       paint/supports
 build_cpp         ParkImporter
-opt_build_c           peep/peep
-opt_build_c           peep/peep_data
-opt_build_c           peep/staff
-opt_build_cpp         platform/crash
-opt_build_c           platform/linux
-opt_build_cpp         platform/Platform2
-opt_build_c           platform/posix
-opt_build_c           platform/shared
-opt_build_c           platform/windows
-opt_build_cpp         PlatformEnvironment
+opt_build_c       peep/peep
+opt_build_c       peep/peep_data
+opt_build_c       peep/staff
+build_cpp         platform/crash
+opt_build_c       platform/linux
+build_cpp         platform/Platform2
+opt_build_c       platform/posix
+opt_build_c       platform/shared
+opt_build_c       platform/windows
+build_cpp         PlatformEnvironment
 build_cpp         rct1/S4Importer
 build_cpp         rct1/tables
 build_c           rct1
@@ -267,7 +267,7 @@ opt_build_c       ride/thrill/swinging_inverter_ship
 opt_build_c       ride/thrill/top_spin
 opt_build_c       ride/thrill/twist
 opt_build_c       ride/track
-opt_build_cpp     ride/TrackDesignRepository
+build_cpp         ride/TrackDesignRepository
 opt_build_c       ride/track_data
 opt_build_c       ride/track_data_old
 opt_build_c       ride/track_design
@@ -299,97 +299,97 @@ build_cpp         ui/DummyUiContext
 build_c           util/sawyercoding
 build_c           util/util
 build_cpp         Version
-opt_build_c           windows/about
-opt_build_c           windows/banner
-opt_build_c           windows/changelog
-opt_build_c           windows/cheats
-opt_build_c           windows/clear_scenery
-opt_build_c           windows/custom_currency
-opt_build_c           windows/debug_paint
-opt_build_c           windows/demolish_ride_prompt
-opt_build_c           windows/dropdown
-opt_build_c           windows/editor_bottom_toolbar
-opt_build_c           windows/editor_inventions_list
-opt_build_c           windows/editor_main
-opt_build_c           windows/editor_objective_options
-opt_build_c           windows/editor_object_selection
-opt_build_c           windows/editor_scenario_options
-opt_build_c           windows/error
-opt_build_c           windows/finances
-opt_build_c           windows/footpath
-opt_build_c           windows/game_bottom_toolbar
-opt_build_c           windows/guest
-opt_build_c           windows/guest_list
-opt_build_c           windows/install_track
-opt_build_c           windows/land
-opt_build_c           windows/land_rights
-opt_build_c           windows/loadsave
-opt_build_c           windows/main
-opt_build_c           windows/map
-opt_build_c           windows/mapgen
-opt_build_c           windows/map_tooltip
-opt_build_c           windows/maze_construction
-opt_build_c           windows/multiplayer
-opt_build_c           windows/music_credits
-opt_build_c           windows/network_status
-opt_build_c           windows/news
-opt_build_c           windows/news_options
-opt_build_c           windows/new_campaign
-opt_build_c           windows/new_ride
-opt_build_c           windows/options
-opt_build_c           windows/park
-opt_build_c           windows/player
-opt_build_c           windows/publisher_credits
-opt_build_c           windows/research
-opt_build_c           windows/ride
-opt_build_c           windows/ride_construction
-opt_build_c           windows/ride_list
-opt_build_c           windows/save_prompt
-opt_build_c           windows/scenery
-opt_build_cpp         windows/server_list
-opt_build_c           windows/server_start
-opt_build_c           windows/shortcut_keys
-opt_build_c           windows/shortcut_key_change
-opt_build_c           windows/sign
-opt_build_c           windows/staff
-opt_build_c           windows/staff_fire_prompt
-opt_build_c           windows/staff_list
-opt_build_c           windows/text_input
-opt_build_c           windows/themes
-opt_build_c           windows/tile_inspector
-opt_build_c           windows/title_command_editor
-opt_build_c           windows/title_editor
-opt_build_c           windows/title_exit
-opt_build_c           windows/title_logo
-opt_build_c           windows/title_menu
-opt_build_c           windows/title_options
-opt_build_c           windows/title_scenarioselect
-opt_build_c           windows/tooltip
-opt_build_c           windows/top_toolbar
-opt_build_c           windows/track_list
-opt_build_c           windows/track_manage
-opt_build_c           windows/track_place
-opt_build_c           windows/viewport
-opt_build_c           windows/view_clipping
-opt_build_c           windows/water
-opt_build_cpp         world/Balloon
-opt_build_cpp         world/banner
-opt_build_cpp         world/Climate
-opt_build_cpp         world/Duck
-opt_build_cpp         world/entrance
-opt_build_c           world/footpath
-opt_build_cpp         world/Fountain
-opt_build_c           world/map
-opt_build_c           world/mapgen
-opt_build_c           world/map_animation
-opt_build_c           world/map_helpers
-opt_build_c           world/money_effect
-opt_build_c           world/park
-opt_build_c           world/particle
-opt_build_c           world/scenery
-opt_build_c           world/sprite
-opt_build_c           world/tile_inspector
-opt_build_cpp         world/wall
+opt_build_c       windows/about
+opt_build_c       windows/banner
+opt_build_c       windows/changelog
+opt_build_c       windows/cheats
+opt_build_c       windows/clear_scenery
+opt_build_c       windows/custom_currency
+opt_build_c       windows/debug_paint
+opt_build_c       windows/demolish_ride_prompt
+opt_build_c       windows/dropdown
+opt_build_c       windows/editor_bottom_toolbar
+opt_build_c       windows/editor_inventions_list
+opt_build_c       windows/editor_main
+opt_build_c       windows/editor_objective_options
+opt_build_c       windows/editor_object_selection
+opt_build_c       windows/editor_scenario_options
+opt_build_c       windows/error
+opt_build_c       windows/finances
+opt_build_c       windows/footpath
+opt_build_c       windows/game_bottom_toolbar
+opt_build_c       windows/guest
+opt_build_c       windows/guest_list
+opt_build_c       windows/install_track
+opt_build_c       windows/land
+opt_build_c       windows/land_rights
+opt_build_c       windows/loadsave
+opt_build_c       windows/main
+opt_build_c       windows/map
+opt_build_c       windows/mapgen
+opt_build_c       windows/map_tooltip
+opt_build_c       windows/maze_construction
+opt_build_c       windows/multiplayer
+opt_build_c       windows/music_credits
+opt_build_c       windows/network_status
+opt_build_c       windows/news
+opt_build_c       windows/news_options
+opt_build_c       windows/new_campaign
+opt_build_c       windows/new_ride
+opt_build_c       windows/options
+opt_build_c       windows/park
+opt_build_c       windows/player
+opt_build_c       windows/publisher_credits
+opt_build_c       windows/research
+opt_build_c       windows/ride
+opt_build_c       windows/ride_construction
+opt_build_c       windows/ride_list
+opt_build_c       windows/save_prompt
+opt_build_c       windows/scenery
+build_cpp         windows/server_list
+opt_build_c       windows/server_start
+opt_build_c       windows/shortcut_keys
+opt_build_c       windows/shortcut_key_change
+opt_build_c       windows/sign
+opt_build_c       windows/staff
+opt_build_c       windows/staff_fire_prompt
+opt_build_c       windows/staff_list
+opt_build_c       windows/text_input
+opt_build_c       windows/themes
+opt_build_c       windows/tile_inspector
+opt_build_c       windows/title_command_editor
+opt_build_c       windows/title_editor
+opt_build_c       windows/title_exit
+opt_build_c       windows/title_logo
+opt_build_c       windows/title_menu
+opt_build_c       windows/title_options
+opt_build_c       windows/title_scenarioselect
+opt_build_c       windows/tooltip
+opt_build_c       windows/top_toolbar
+opt_build_c       windows/track_list
+opt_build_c       windows/track_manage
+opt_build_c       windows/track_place
+opt_build_c       windows/viewport
+opt_build_c       windows/view_clipping
+opt_build_c       windows/water
+build_cpp         world/Balloon
+build_cpp         world/banner
+build_cpp         world/Climate
+build_cpp         world/Duck
+build_cpp         world/entrance
+opt_build_c       world/footpath
+build_cpp         world/Fountain
+opt_build_c       world/map
+opt_build_c       world/mapgen
+opt_build_c       world/map_animation
+opt_build_c       world/map_helpers
+opt_build_c       world/money_effect
+opt_build_c       world/park
+opt_build_c       world/particle
+opt_build_c       world/scenery
+optx_build_c       world/sprite
+opt_build_c       world/tile_inspector
+build_cpp         world/wall
 
 
 

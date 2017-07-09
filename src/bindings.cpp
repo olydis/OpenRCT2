@@ -41,7 +41,21 @@ extern "C"
         
     }
 
-    // PATCH
+    // PATCH 1
+    void _ZN8OpenRCT27Context11RunGameLoopEvX(void* self)
+    {
+        EM_ASM_INT({
+            var self = $0;
+            window.dispatchEvent(new Event("resize"));
+            setInterval(function()
+            {
+                Module["__ZN8OpenRCT27Context16RunVariableFrameEv"](self);
+            },16);
+            throw 42;
+        }, self);
+    }
+
+    // PATCH 2
     struct SDL_Cursor
     {
         struct SDL_Cursor *next;

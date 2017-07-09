@@ -4,6 +4,11 @@ www/rct1-data-path
 www/rct2-data-path
 www/user-data-path
 twistd.*
+settings.json
+oldoptimized*
+openrct2*.js
+openrct2*.js.mem
+short_funcs.js
 log.txt
 
 # OPENRCT2
