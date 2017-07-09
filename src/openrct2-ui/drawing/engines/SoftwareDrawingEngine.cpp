@@ -368,12 +368,12 @@ public:
 
     void Invalidate(sint32 left, sint32 top, sint32 right, sint32 bottom) override
     {
-        left = Math::Max(left, 0);
-        right = Math::Min(right, (sint32)_width);
+        left = mmax(left, 0);
+        right = mmin(right, (sint32)_width);
         if (left >= right) return;
 
-        top = Math::Max(top, 0);
-        bottom = Math::Min(bottom, (sint32)_height);
+        top = mmax(top, 0);
+        bottom = mmin(bottom, (sint32)_height);
         if (top >= bottom) return;
 
         right--;
@@ -448,10 +448,10 @@ public:
         // NOTE: when zooming, there can be x, y, dx, dy combinations that go off the
         // screen; hence the checks. This code should ultimately not be called when
         // zooming because this function is specific to updating the screen on move
-        sint32 lmargin = Math::Min(x - dx, 0);
-        sint32 rmargin = Math::Min((sint32)_width - (x - dx + width), 0);
-        sint32 tmargin = Math::Min(y - dy, 0);
-        sint32 bmargin = Math::Min((sint32)_height - (y - dy + height), 0);
+        sint32 lmargin = mmin(x - dx, 0);
+        sint32 rmargin = mmin((sint32)_width - (x - dx + width), 0);
+        sint32 tmargin = mmin(y - dy, 0);
+        sint32 bmargin = mmin((sint32)_height - (y - dy + height), 0);
         x -= lmargin;
         y -= tmargin;
         width += lmargin + rmargin;
@@ -523,15 +523,15 @@ private:
         {
             if (_pitch == pitch)
             {
-                Memory::Copy(newBits, _bits, Math::Min(_bitsSize, newBitsSize));
+                Memory::Copy(newBits, _bits, mmin(_bitsSize, newBitsSize));
             }
             else
             {
                 uint8 * src = _bits;
                 uint8 * dst = newBits;
 
-                uint32 minWidth = Math::Min(_width, width);
-                uint32 minHeight = Math::Min(_height, height);
+                uint32 minWidth = mmin(_width, width);
+                uint32 minHeight = mmin(_height, height);
                 for (uint32 y = 0; y < minHeight; y++)
                 {
                     Memory::Copy(dst, src, minWidth);
@@ -657,10 +657,10 @@ private:
         }
 
         // Determine region in pixels
-        uint32 left = Math::Max<uint32>(0, x * _dirtyGrid.BlockWidth);
-        uint32 top = Math::Max<uint32>(0, y * _dirtyGrid.BlockHeight);
-        uint32 right = Math::Min(_width, left + (columns * _dirtyGrid.BlockWidth));
-        uint32 bottom = Math::Min(_height, top + (rows * _dirtyGrid.BlockHeight));
+        uint32 left = mmax(0, x * _dirtyGrid.BlockWidth);
+        uint32 top = mmax(0, y * _dirtyGrid.BlockHeight);
+        uint32 right = mmin(_width, left + (columns * _dirtyGrid.BlockWidth));
+        uint32 bottom = mmin(_height, top + (rows * _dirtyGrid.BlockHeight));
         if (right <= left || bottom <= top)
         {
             return;

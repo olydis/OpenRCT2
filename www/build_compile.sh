@@ -6,7 +6,7 @@ build_c() {
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
-        -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
+        -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
@@ -19,11 +19,24 @@ build_cpp() {
     emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
-        -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
+        -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 \
+        -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -c ../src/openrct2/$1.cpp
+    llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || echo nf
+}
+build_cpp_() {
+    echo $1
+    emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
+        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
+        -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
+        -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
+        -I../lib/include/jansson/ -I../include -fstrict-aliasing \
+        -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
+        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
+        -fPIC -O1 \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -c ../src/openrct2/$1.cpp
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.cpp.ll || echo nf
 }
@@ -32,24 +45,11 @@ opt_build_c() {
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
-        -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
+        -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../lib/include/jansson/ -I../include -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 -fno-exceptions \
-        -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
-    llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
-}
-optx_build_c() {
-    echo $1
-    emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
-        -std=gnu11 -S -emit-llvm \
-        -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing \
-        -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
-        -fPIC -O3 -fno-exceptions --llvm-lto 1 \
         -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -c ../src/openrct2/$1.c
     llvm-dis ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o -o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || mv ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.o ../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1.c.ll || echo nf
 }
@@ -70,7 +70,7 @@ build_cpp         config/Config
 build_cpp         config/IniReader
 build_cpp         config/IniWriter
 build_cpp         config/KeyboardShortcuts
-build_cpp         Context
+build_cpp_         Context
 build_cpp         core/Console
 build_cpp         core/Diagnostics
 build_cpp         core/File
@@ -387,7 +387,7 @@ opt_build_c       world/money_effect
 opt_build_c       world/park
 opt_build_c       world/particle
 opt_build_c       world/scenery
-optx_build_c       world/sprite
+opt_build_c       world/sprite
 opt_build_c       world/tile_inspector
 build_cpp         world/wall
 

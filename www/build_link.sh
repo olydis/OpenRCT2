@@ -350,9 +350,9 @@ emcc \
     -s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
     -s ELIMINATE_DUPLICATE_FUNCTIONS=1 \
     -s ASSERTIONS=0 \
-    -s INLINING_LIMIT=10 \
-    -s "EXPORTED_FUNCTIONS=['_main','_malloc','_Emscripten_CreateCursor','__ZN8OpenRCT27Context16RunVariableFrameEv','__ZN8OpenRCT27Context11RunGameLoopEvX']" \
-    -Oz -g3
+    -s INLINING_LIMIT=1000 \
+    -s "EXPORTED_FUNCTIONS=['_main','_malloc','_Emscripten_CreateCursor','__ZN8OpenRCT27Context16RunVariableFrameEv','__ZN8OpenRCT27Context13RunFixedFrameEv','__ZN8OpenRCT27Context11RunGameLoopEvX']" \
+    -O2 -g3
 
     # debug: -O1
     # release: -Oz -g3

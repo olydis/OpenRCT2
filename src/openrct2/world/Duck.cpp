@@ -287,7 +287,7 @@ void rct_duck::UpdateFlyAway()
         sint32 direction = sprite_direction >> 3;
         sint32 newX = x + (DuckMoveOffset[direction].x * 2);
         sint32 newY = y + (DuckMoveOffset[direction].y * 2);
-        sint32 newZ = Math::Min(z + 2, 496);
+        sint32 newZ = mmin(z + 2, 496);
         if (map_is_location_valid(newX, newY))
         {
             MoveTo(newX, newY, newZ);

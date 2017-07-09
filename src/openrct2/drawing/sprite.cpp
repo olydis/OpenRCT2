@@ -597,16 +597,16 @@ extern "C"
             return;
         }
 
-        width = Math::Min(imgMask->width, imgColour->width);
-        height = Math::Min(imgMask->height, imgColour->height);
+        width = mmin(imgMask->width, imgColour->width);
+        height = mmin(imgMask->height, imgColour->height);
 
         x += imgMask->x_offset;
         y += imgMask->y_offset;
 
-        left = Math::Max<sint32>(dpi->x, x);
-        top = Math::Max<sint32>(dpi->y, y);
-        right = Math::Min(dpi->x + dpi->width, x + width);
-        bottom = Math::Min(dpi->y + dpi->height, y + height);
+        left = mmax(dpi->x, x);
+        top = mmax(dpi->y, y);
+        right = mmin(dpi->x + dpi->width, x + width);
+        bottom = mmin(dpi->y + dpi->height, y + height);
 
         width = right - left;
         height = bottom - top;
