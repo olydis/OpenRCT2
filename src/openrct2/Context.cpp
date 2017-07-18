@@ -65,7 +65,7 @@ namespace OpenRCT2
     {
     private:
         // The game update inverval in milliseconds, (1000 / 40fps) = 25ms
-        constexpr static uint32 UPDATE_TIME_MS = 1;
+        constexpr static uint32 UPDATE_TIME_MS = 25;
 
         // Dependencies
         IAudioContext * const _audioContext = nullptr;

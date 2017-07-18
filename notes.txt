@@ -13,3 +13,37 @@ cmake -D COMMON_COMPILE_OPTIONS="-S -emit-llvm -fmax-type-align=1 -DDISABLE_NETW
 
 
 play with -Ox during compilation
+
+
+
+
+REPLACE:
+
+
+function _get_current_rotation()
+function orphan1()
+
+_get_current_rotation()
+(HEAP8[3145713] & 3)
+
+
+
+
+ << 24 >> 24 == (\d)
+ == $1
+
+
+
+
+function invoke_
+function invokex_
+
+invoke_([a-z]+)\(
+dynCall_$1(
+
+"invoke_([a-z]+)": invoke_([a-z]+),
+
+
+
+MACRO CANDIDS
+\{\n.*\n\}

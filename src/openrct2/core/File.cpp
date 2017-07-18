@@ -77,6 +77,7 @@ extern "C"
 {
     bool readentirefile(const utf8 * path, void * * outBuffer, size_t * outLength)
     {
+        if (!File::Exists(path)) return false;
         try
         {
             *outBuffer = File::ReadAllBytes(String::ToStd(path), outLength);

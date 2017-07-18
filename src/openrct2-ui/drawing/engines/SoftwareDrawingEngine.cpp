@@ -947,10 +947,12 @@ void SoftwareDrawingContext::FillRect(uint32 colour, sint32 left, sint32 top, si
     }
 
     sint32 endX = right - dpi->x + 1;
-    if (endX > dpi->width)
+    sint16 dwidth = dpi->width;
+    if (endX > dwidth)
     {
-        endX = dpi->width;
+        endX = dwidth;
     }
+    dwidth += dpi->pitch;
 
     sint32 startY = top - dpi->y;
     if (startY < 0)
@@ -971,10 +973,10 @@ void SoftwareDrawingContext::FillRect(uint32 colour, sint32 left, sint32 top, si
     if (colour & 0x1000000)
     {
         // Cross hatching
-        uint8 * dst = (startY * (dpi->width + dpi->pitch)) + startX + dpi->bits;
+        uint8 * dst = (startY * dwidth) + startX + dpi->bits;
         for (sint32 i = 0; i < height; i++)
         {
-            uint8 * nextdst = dst + dpi->width + dpi->pitch;
+            uint8 * nextdst = dst + dwidth;
             uint32  p = ror32(crossPattern, 1);
             p = (p & 0xFFFF0000) | width;
 
@@ -998,7 +1000,7 @@ void SoftwareDrawingContext::FillRect(uint32 colour, sint32 left, sint32 top, si
     }
     else if (colour & 0x4000000)
     {
-        uint8 * dst = startY * (dpi->width + dpi->pitch) + startX + dpi->bits;
+        uint8 * dst = startY * dwidth + startX + dpi->bits;
 
         // The pattern loops every 15 lines this is which
         // part the pattern is on.
@@ -1013,7 +1015,7 @@ void SoftwareDrawingContext::FillRect(uint32 colour, sint32 left, sint32 top, si
 
         for (sint32 numLines = height; numLines > 0; numLines--)
         {
-            uint8 * nextdst = dst + dpi->width + dpi->pitch;
+            uint8 * nextdst = dst + dwidth;
             uint16  pattern = patternsrc[patternY];
 
             for (sint32 numPixels = width; numPixels > 0; numPixels--)
@@ -1032,11 +1034,11 @@ void SoftwareDrawingContext::FillRect(uint32 colour, sint32 left, sint32 top, si
     }
     else
     {
-        uint8 * dst = startY * (dpi->width + dpi->pitch) + startX + dpi->bits;
+        uint8 * dst = startY * dwidth + startX + dpi->bits;
         for (sint32 i = 0; i < height; i++)
         {
             Memory::Set(dst, colour & 0xFF, width);
-            dst += dpi->width + dpi->pitch;
+            dst += dwidth;
         }
     }
 }

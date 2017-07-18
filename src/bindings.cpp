@@ -49,8 +49,8 @@ extern "C"
             window.dispatchEvent(new Event("resize"));
             setInterval(function()
             {
-                //Module["__ZN8OpenRCT27Context16RunVariableFrameEv"](self);
-                Module["__ZN8OpenRCT27Context13RunFixedFrameEv"](self);
+                Module["__ZN8OpenRCT27Context16RunVariableFrameEv"](self);
+                //Module["__ZN8OpenRCT27Context13RunFixedFrameEv"](self);
             },16);
             throw 42;
         }, self);
