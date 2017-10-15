@@ -1,0 +1,22 @@
+{
+  "name": "openrct2",
+  "version": "0.1.0",
+  "description": "An open-source re-implementation of RollerCoaster Tycoon 2. A construction and management simulation video game that simulates amusement park management.",
+  "main": "www/openrct2.js",
+  "scripts": {
+    "start": "cd www && http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olydis/OpenRCT2.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/olydis/OpenRCT2/issues"
+  },
+  "homepage": "https://github.com/olydis/OpenRCT2#readme",
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}

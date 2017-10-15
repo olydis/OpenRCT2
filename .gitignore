@@ -10,6 +10,8 @@ openrct2*.js
 openrct2*.js.mem
 short_funcs.js
 log.txt
+node_modules/
+.vscode/settings.json
 
 # OPENRCT2
 
