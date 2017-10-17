@@ -342,7 +342,7 @@ emcc \
     ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/Ui.cpp.ll \
     ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.ll \
     ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.ll \
-    -o openrct2.js --memory-init-file 1 \
+    -o ../www/openrct2.js --memory-init-file 1 \
     --js-transform "sed -i -e 's/,_Emscripten_CreateCursor_....,/,_Emscripten_CreateCursor,/g' -e 's/_dlopen(filename, flag) {/_dlopen(filename, flag) {return 0;/g' -e 's/function _Blit1to4(/function _Blit1to4x(/g' -e 's/__ZN8OpenRCT27Context11RunGameLoopEv(\$0);/__ZN8OpenRCT27Context11RunGameLoopEvX(\$0);/g'" \
     -s USE_SDL=2 \
     -s TOTAL_MEMORY=512*1024*1024 \
@@ -368,6 +368,7 @@ emcc \
     # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/network/NetworkServerAdvertiser.cpp.ll \
     # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/network/NetworkUser.cpp.ll \
     # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/network/ServerList.cpp.ll \
+    # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/network/TcpSocket.cpp.ll \
     # ../build/CMakeFiles/libopenrct2.dir/src/openrct2/platform/windows.c.ll \
     # ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/opengl/CopyFramebufferShader.cpp.ll \
     # ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/opengl/DrawImageShader.cpp.ll \
@@ -382,10 +383,7 @@ emcc \
     # ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.ll \
 
 
-
 # --llvm-lto 3 \ # NOT STABLE!
-
-#     ./CMakeFiles/libopenrct2.dir/src/openrct2/network/TcpSocket.cpp.ll \
 
 # -s DEMANGLE_SUPPORT=1
 

@@ -18,15 +18,17 @@
 #define _COMMON_H_
 
 #include <SDL_platform.h>
+#include <SDL_pixels.h>
 
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
 #endif
 #undef M_PI
 
-#ifdef _MSC_VER
+// #ifdef _MSC_VER
 #include <time.h>
-#endif
+#include <ctype.h>
+// #endif
 
 #include <assert.h>
 #include <limits.h>

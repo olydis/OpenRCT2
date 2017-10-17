@@ -1,13 +1,22 @@
 #!/bin/bash
 set -e
 
+ls /usr/lib/x86_64-linux-gnu/libzip/include || echo "MISSING DEPENDENCY: /usr/lib/x86_64-linux-gnu/libzip/include (apt install libzip-dev)"
+ls /usr/include/libpng12                    || echo "MISSING DEPENDENCY: /usr/include/libpng12                    (apt install libpng-dev)"
+ls /usr/include/jansson.h                   || echo "MISSING DEPENDENCY: /usr/include/jansson.h                   (apt install libjansson-dev)"
+
+mkdir -p ../build/include
+cp /usr/include/jansson.h        ../build/include
+cp /usr/include/jansson_config.h ../build/include
+
 build_c() {
     echo $1
+    mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
+        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing \
+        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -fno-exceptions \
@@ -16,11 +25,12 @@ build_c() {
 }
 build_cpp() {
     echo $1
+    mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
+        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing \
+        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 \
@@ -29,11 +39,12 @@ build_cpp() {
 }
 build_cpp_() {
     echo $1
+    mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
+        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing \
+        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O1 \
@@ -42,11 +53,12 @@ build_cpp_() {
 }
 opt_build_c() {
     echo $1
+    mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
+        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing \
+        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 -fno-exceptions \
@@ -392,40 +404,34 @@ opt_build_c       world/tile_inspector
 build_cpp         world/wall
 
 
-
-emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
+buildui() {
+    echo $1
+    mkdir -p $(dirname "../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1")
+    emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
+        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -O3 -fmax-type-align=1 \
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing -I../src -fstrict-aliasing \
+        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing -I../src -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC  \
-        -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioMixer.cpp.o -c ../src/openrct2-ui/audio/AudioMixer.cpp
+        -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1.cpp.o -c ../src/openrct2-ui/$1.cpp
+    llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1.cpp.ll || echo nf
+}
 
-emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/SDL2 -I/usr/include/libpng12 -I/usr/include/freetype2 \
-        -stdlib=libc++ -std=gnu++14 -S -emit-llvm -O3 -fmax-type-align=1 \
-        -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -fstrict-aliasing -I../src -fstrict-aliasing \
-        -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
-        -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
-        -fPIC  \
-        -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/SoftwareDrawingEngine.cpp.o -c ../src/openrct2-ui/drawing/engines/SoftwareDrawingEngine.cpp
+buildui   audio/AudioChannel
+buildui   audio/AudioContext
+buildui   audio/AudioMixer
+buildui   audio/FileAudioSource
+buildui   audio/MemoryAudioSource
+buildui   CursorData
+buildui   CursorRepository
+buildui   drawing/engines/SoftwareDrawingEngine
+buildui   TextComposition
+buildui   Ui
+buildui   UiContext
+buildui   UiContext.Linux
+buildui   UiContext.Win32
 
 
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioChannel.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioChannel.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioChannel.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioChannel.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioContext.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioContext.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioContext.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioContext.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioMixer.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioMixer.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioMixer.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/AudioMixer.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/FileAudioSource.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/FileAudioSource.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/FileAudioSource.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/FileAudioSource.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/MemoryAudioSource.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/MemoryAudioSource.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/MemoryAudioSource.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/audio/MemoryAudioSource.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorData.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorData.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorData.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorData.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorRepository.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorRepository.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorRepository.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/CursorRepository.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/SoftwareDrawingEngine.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/SoftwareDrawingEngine.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/SoftwareDrawingEngine.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/drawing/engines/SoftwareDrawingEngine.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/TextComposition.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/TextComposition.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/TextComposition.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/TextComposition.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/Ui.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/Ui.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/Ui.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/Ui.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Linux.cpp.ll || echo nf
-llvm-dis ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.o -o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.ll || mv ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.o ../build/CMakeFiles/openrct2.dir/src/openrct2-ui/UiContext.Win32.cpp.ll || echo nf
-
-emcc ../src/bindings.cpp -std=c++11 -o ../build/bindings.ll -I/usr/include/SDL2 -S -emit-llvm -stdlib=libc++
+emcc ../src/bindings.cpp -std=c++11 -o ../build/bindings.ll -S -emit-llvm -stdlib=libc++

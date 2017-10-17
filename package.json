@@ -4,6 +4,7 @@
   "description": "An open-source re-implementation of RollerCoaster Tycoon 2. A construction and management simulation video game that simulates amusement park management.",
   "main": "www/openrct2.js",
   "scripts": {
+    "build": "bash -i -c \"./browser_build/build.sh\"",
     "start": "cd www && http-server"
   },
   "repository": {
