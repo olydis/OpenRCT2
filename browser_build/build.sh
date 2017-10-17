@@ -15,4 +15,8 @@ set -e
 cd "$(dirname "$0")"
 bash ./build_compile.sh
 bash ./build_link.sh
+
+# copy stuff
+mkdir -p ../www/user-data-path
 cp index.html ../www
+cp config.init ../www/user-data-path
