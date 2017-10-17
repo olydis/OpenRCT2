@@ -16,7 +16,7 @@ build_c() {
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
+        -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -fno-exceptions \
@@ -30,7 +30,7 @@ build_cpp() {
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
+        -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 \
@@ -44,7 +44,7 @@ build_cpp_() {
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
+        -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O1 \
@@ -58,7 +58,7 @@ opt_build_c() {
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing \
+        -I../include -I../include/sdl -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wimplicit -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC -O3 -fno-exceptions \
@@ -411,7 +411,7 @@ buildui() {
         -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -O3 -fmax-type-align=1 \
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
-        -I../lib/include/jansson/ -I../include -I../include/sdl -fstrict-aliasing -I../src -fstrict-aliasing \
+        -I../include -I../include/sdl -fstrict-aliasing -I../src -fstrict-aliasing \
         -Werror -Wundef -Wmissing-declarations -Winit-self -Wall -Wno-unknown-pragmas -Wno-unused-function -Wno-missing-braces \
         -Wno-comment -Wshadow  -Wmissing-declarations -Wnonnull \
         -fPIC  \
