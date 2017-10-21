@@ -434,4 +434,4 @@ buildui   UiContext.Linux
 buildui   UiContext.Win32
 
 
-emcc ../src/bindings.cpp -std=c++11 -o ../build/bindings.ll -S -emit-llvm -stdlib=libc++
+emcc ../src/bindings.cpp -std=c++11 -I../include/sdl -o ../build/bindings.ll -S -emit-llvm -stdlib=libc++
