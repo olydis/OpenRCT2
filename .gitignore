@@ -1,3 +1,9 @@
+# emscripten
+.vscode/
+node_modules/
+www/
+package-lock.json
+
 # OPENRCT2
 
 sdl
