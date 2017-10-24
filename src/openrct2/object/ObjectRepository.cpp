@@ -22,6 +22,7 @@
 
 #include "../common.h"
 #include "../core/Console.hpp"
+#include "../core/File.h"
 #include "../core/FileScanner.h"
 #include "../core/FileStream.hpp"
 #include "../core/Guard.hpp"
@@ -347,6 +348,7 @@ private:
     bool Load()
     {
         const std::string &path = _env->GetFilePath(PATHID::CACHE_OBJECTS);
+        if (!File::Exists(path)) return false;
         try
         {
             auto fs = FileStream(path, FILE_MODE_OPEN);

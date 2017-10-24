@@ -71,6 +71,13 @@ typedef uint8 colour_t;
 #define rol64(x, shift)		(((uint64)(x) << (shift)) | ((uint32)(x) >> (64 - (shift))))
 #define ror64(x, shift)		(((uint64)(x) >> (shift)) | ((uint32)(x) << (64 - (shift))))
 
+#ifdef __cplusplus
+
+#define mmin(a,b)            (((a) < (b)) ? (a) : (b))
+#define mmax(a,b)            (((a) > (b)) ? (a) : (b))
+
+#endif // __cplusplus
+
 #ifndef __cplusplus
 // in C++ you should be using Math::Min and Math::Max
 #ifndef min

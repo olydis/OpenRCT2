@@ -999,30 +999,22 @@ void surface_paint(uint8 direction, uint16 height, rct_map_element * mapElement)
 	uint32 terrain_type = map_element_get_terrain(mapElement);
 	uint32 surfaceShape = viewport_surface_paint_setup_get_relative_slope(mapElement, rotation);
 
-	rct_xy16 base = {
-		.x = gUnk9DE568,
-		.y = gUnk9DE56C
-	};
-
 	corner_height ch = corner_heights[surfaceShape];
-	tile_descriptor selfDescriptor = {
-		.map_element = mapElement,
-		.slope = surfaceShape,
-		.terrain = terrain_type,
-		.corner_heights = {
-			.top = height / 16 + ch.top,
-			.right = height / 16 + ch.right,
-			.bottom = height / 16 + ch.bottom,
-			.left = height / 16 + ch.left,
-		}
-	};
+
+	uint16 h16 = height / 16;
 
 	tile_descriptor tileDescriptors[5];
-	tileDescriptors[0] = selfDescriptor;
+	tileDescriptors[0].map_element = mapElement;
+	tileDescriptors[0].slope = surfaceShape;
+	tileDescriptors[0].terrain = terrain_type;
+	tileDescriptors[0].corner_heights.top = h16 + ch.top;
+	tileDescriptors[0].corner_heights.right = h16 + ch.right;
+	tileDescriptors[0].corner_heights.bottom = h16 + ch.bottom;
+	tileDescriptors[0].corner_heights.left = h16 + ch.left;
 
 	for (sint32 i = 0; i < 4; i++) {
 		rct_xy16 offset = viewport_surface_paint_data[i][rotation];
-		rct_xy16 position = {.x = base.x + offset.x, .y = base.y + offset.y};
+		rct_xy16 position = {.x = gUnk9DE568 + offset.x, .y = gUnk9DE56C + offset.y};
 
 		tileDescriptors[i + 1].map_element = NULL;
 		if (position.x > 0x2000 || position.y > 0x2000) {

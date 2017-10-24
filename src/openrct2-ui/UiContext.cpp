@@ -228,18 +228,7 @@ public:
     // Drawing
     IDrawingEngine * CreateDrawingEngine(DRAWING_ENGINE_TYPE type) override
     {
-        switch ((sint32)type) {
-        case DRAWING_ENGINE_SOFTWARE:
-            return CreateSoftwareDrawingEngine(this);
-        case DRAWING_ENGINE_SOFTWARE_WITH_HARDWARE_DISPLAY:
-            return CreateHardwareDisplayDrawingEngine(this);
-#ifndef DISABLE_OPENGL
-        case DRAWING_ENGINE_OPENGL:
-            return CreateOpenGLDrawingEngine(this);
-#endif
-        default:
-            return nullptr;
-        }
+        return CreateSoftwareDrawingEngine(this);
     }
 
     // Text input

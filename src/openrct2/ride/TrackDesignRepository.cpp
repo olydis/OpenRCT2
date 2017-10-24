@@ -293,6 +293,7 @@ private:
     bool Load()
     {
         std::string path = _env->GetFilePath(PATHID::CACHE_TRACKS);
+        if (!File::Exists(path)) return false;
         bool result = false;
         try
         {
