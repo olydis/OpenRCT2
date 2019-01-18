@@ -19,5 +19,5 @@ cp config.ini ../www/user-data-path
 
 # build
 set -e
-sed -i 's/\r$//' ./build_compile.sh && ./build_compile.sh
-sed -i 's/\r$//' ./build_link.sh    && ./build_link.sh
+./build_compile.sh
+./build_link.sh
