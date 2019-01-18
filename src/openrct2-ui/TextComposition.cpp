@@ -40,7 +40,7 @@ using namespace OpenRCT2::Ui;
 
 bool TextComposition::IsActive()
 {
-    return SDL_IsTextInputActive() && _session.Buffer != nullptr;
+    return /*SDL_IsTextInputActive() &&*/ _session.Buffer != nullptr;
 }
 
 TextInputSession * TextComposition::Start(utf8 * buffer, size_t bufferSize)

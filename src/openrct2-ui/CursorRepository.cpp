@@ -35,8 +35,8 @@ CursorRepository::~CursorRepository()
 void CursorRepository::LoadCursors()
 {
     // Using system cursors
-    _loadedCursors[CURSOR_ARROW] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
-    _loadedCursors[CURSOR_HAND_POINT] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+    _loadedCursors[CURSOR_ARROW] = nullptr;//SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+    _loadedCursors[CURSOR_HAND_POINT] = nullptr;//SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
 
     // Using custom cursors
     for (size_t i = 0; i < CURSOR_COUNT; i++)

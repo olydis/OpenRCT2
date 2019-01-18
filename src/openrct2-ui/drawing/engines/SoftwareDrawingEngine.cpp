@@ -338,7 +338,7 @@ public:
                     const SDL_Color * lightPalette = lightfx_get_palette();
                     for (sint32 i = 0; i < 256; i++)
                     {
-                        _lightPaletteHWMapped[i] = SDL_MapRGBA(_screenTextureFormat, lightPalette[i].r, lightPalette[i].g, lightPalette[i].b, lightPalette[i].a);
+                        _lightPaletteHWMapped[i] = SDL_MapRGBA(_screenTextureFormat, lightPalette[i].r, lightPalette[i].g, lightPalette[i].b, lightPalette[i].unused);
                     }
                 }
 #endif
@@ -354,7 +354,7 @@ public:
                     colours[i].r = palette[i].red;
                     colours[i].g = palette[i].green;
                     colours[i].b = palette[i].blue;
-                    colours[i].a = palette[i].alpha;
+                    colours[i].unused = palette[i].alpha;
                 }
                 SDL_SetPaletteColors(_palette, colours, 0, 256);
             }

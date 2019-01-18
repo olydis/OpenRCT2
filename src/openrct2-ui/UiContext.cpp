@@ -54,6 +54,8 @@ using namespace OpenRCT2::Ui;
     #define KEYBOARD_PRIMARY_MODIFIER KMOD_CTRL
 #endif
 
+#define SDL_WINDOW_FULLSCREEN_DESKTOP (SDL_WINDOW_FULLSCREEN | 0x00001000)
+
 class UiContext final : public IUiContext
 {
 private:
@@ -80,8 +82,8 @@ private:
     uint32          _lastKeyPressed         = 0;
     const uint8 *   _keysState              = nullptr;
     uint8           _keysPressed[256]       = { 0 };
-    uint32          _lastGestureTimestamp   = 0;
-    float           _gestureRadius          = 0;
+    // uint32          _lastGestureTimestamp   = 0;
+    // float           _gestureRadius          = 0;
 
 public:
     UiContext()
@@ -125,7 +127,7 @@ public:
         // HACK Changing window size when in fullscreen usually has no effect
         if (mode == FULLSCREEN_MODE::FULLSCREEN)
         {
-            SDL_SetWindowFullscreen(_window, 0);
+            SDL_SetWindowFullscreen(_window, SDL_FALSE);
         }
 
         // Set window size
@@ -140,7 +142,7 @@ public:
             SDL_SetWindowSize(_window, gConfigGeneral.window_width, gConfigGeneral.window_height);
         }
 
-        if (SDL_SetWindowFullscreen(_window, windowFlags))
+        if (SDL_SetWindowFullscreen(_window, windowFlags == 0 ? SDL_FALSE : SDL_TRUE))
         {
             log_fatal("SDL_SetWindowFullscreen %s", SDL_GetError());
             exit(1);
@@ -277,7 +279,7 @@ public:
                     if ((SDL_GetWindowFlags(_window) & SDL_WINDOW_FULLSCREEN_DESKTOP) == SDL_WINDOW_FULLSCREEN_DESKTOP)
                     {
                         SDL_RestoreWindow(_window);
-                        SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+                        SDL_SetWindowFullscreen(_window, SDL_TRUE);
                     }
                 }
 
@@ -293,7 +295,7 @@ public:
                 case SDL_WINDOWEVENT_RESTORED:
                 {
                     // Update default display index
-                    sint32 displayIndex = SDL_GetWindowDisplayIndex(_window);
+                    sint32 displayIndex = 0;
                     if (displayIndex != gConfigGeneral.default_display)
                     {
                         gConfigGeneral.default_display = displayIndex;
@@ -422,26 +424,26 @@ public:
             case SDL_KEYDOWN:
                 _textComposition.HandleMessage(&e);
                 break;
-            case SDL_MULTIGESTURE:
-                if (e.mgesture.numFingers == 2)
-                {
-                    if (e.mgesture.timestamp > _lastGestureTimestamp + 1000)
-                    {
-                        _gestureRadius = 0;
-                    }
-                    _lastGestureTimestamp = e.mgesture.timestamp;
-                    _gestureRadius += e.mgesture.dDist;
+            // case SDL_MULTIGESTURE:
+            //     if (e.mgesture.numFingers == 2)
+            //     {
+            //         if (e.mgesture.timestamp > _lastGestureTimestamp + 1000)
+            //         {
+            //             _gestureRadius = 0;
+            //         }
+            //         _lastGestureTimestamp = e.mgesture.timestamp;
+            //         _gestureRadius += e.mgesture.dDist;
 
-                    // Zoom gesture
-                    constexpr sint32 tolerance = 128;
-                    sint32 gesturePixels = (sint32)(_gestureRadius * _width);
-                    if (abs(gesturePixels) > tolerance)
-                    {
-                        _gestureRadius = 0;
-                        main_window_zoom(gesturePixels > 0, true);
-                    }
-                }
-                break;
+            //         // Zoom gesture
+            //         constexpr sint32 tolerance = 128;
+            //         sint32 gesturePixels = (sint32)(_gestureRadius * _width);
+            //         if (abs(gesturePixels) > tolerance)
+            //         {
+            //             _gestureRadius = 0;
+            //             main_window_zoom(gesturePixels > 0, true);
+            //         }
+            //     }
+            //     break;
             case SDL_TEXTEDITING:
                 _textComposition.HandleMessage(&e);
                 break;
@@ -483,7 +485,7 @@ public:
 
     void CreateWindow() override
     {
-        SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, gConfigGeneral.minimize_fullscreen_focus_loss ? "1" : "0");
+        // SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, gConfigGeneral.minimize_fullscreen_focus_loss ? "1" : "0");
 
         // TODO This should probably be called somewhere else. It has nothing to do with window creation and can be done as soon as
         // g1.dat is loaded.
@@ -513,7 +515,7 @@ public:
             SDLException::Throw("SDL_CreateWindow(...)");
         }
 
-        SDL_SetWindowMinimumSize(_window, 720, 480);
+        // SDL_SetWindowMinimumSize(_window, 720, 480);
         SetCursorTrap(gConfigGeneral.trap_cursor);
         _platformUiContext->SetWindowIcon(_window);
 
@@ -587,7 +589,7 @@ private:
     void UpdateFullscreenResolutions()
     {
         // Query number of display modes
-        sint32 displayIndex = SDL_GetWindowDisplayIndex(_window);
+        sint32 displayIndex = 0;
         sint32 numDisplayModes = SDL_GetNumDisplayModes(displayIndex);
 
         // Get desktop aspect ratio

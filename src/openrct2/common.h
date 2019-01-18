@@ -17,6 +17,7 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+#include <SDL_stdinc.h>
 #include <SDL_platform.h>
 #include <SDL_pixels.h>
 

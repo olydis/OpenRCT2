@@ -1,19 +1,19 @@
 #!/bin/bash
 set -e
 
-ls /usr/lib/x86_64-linux-gnu/libzip/include || echo "MISSING DEPENDENCY: /usr/lib/x86_64-linux-gnu/libzip/include (apt install libzip-dev)"
-ls /usr/include/libpng12                    || echo "MISSING DEPENDENCY: /usr/include/libpng12                    (apt install libpng-dev)"
-ls /usr/include/jansson.h                   || echo "MISSING DEPENDENCY: /usr/include/jansson.h                   (apt install libjansson-dev)"
+ls /usr/local/include/zip.h                 || echo "MISSING DEPENDENCY: /usr/local/include/zip.h       (brew install libzip)"
+ls /usr/local/include/pngconf.h             || echo "MISSING DEPENDENCY: /usr/local/include/pngconf.h   (brew install libpng)"
+ls /usr/local/include/jansson.h             || echo "MISSING DEPENDENCY: /usr/local/include/jansson.h   (brew install jansson)"
 
 mkdir -p ../build/include
-cp /usr/include/jansson.h        ../build/include
-cp /usr/include/jansson_config.h ../build/include
+cp /usr/local/include/jansson.h        ../build/include
+cp /usr/local/include/jansson_config.h ../build/include
 
 build_c() {
     echo $1
     mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
+        -I/usr/local/include -I/usr/include/libpng12 -I../build/include \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../include -I../include/sdl -fstrict-aliasing \
@@ -27,7 +27,7 @@ build_cpp() {
     echo $1
     mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
+        -I/usr/local/include -I/usr/include/libpng12 -I../build/include \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../include -I../include/sdl -fstrict-aliasing \
@@ -41,7 +41,7 @@ build_cpp_() {
     echo $1
     mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
+        -I/usr/local/include -I/usr/include/libpng12 -I../build/include \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../include -I../include/sdl -fstrict-aliasing \
@@ -55,7 +55,7 @@ opt_build_c() {
     echo $1
     mkdir -p $(dirname "../build/CMakeFiles/libopenrct2.dir/src/openrct2/$1")
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 -I../build/include \
+        -I/usr/local/include -I/usr/include/libpng12 -I../build/include \
         -std=gnu11 -S -emit-llvm -fmax-type-align=1 \
         -DDISABLE_OPENGL -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../include -I../include/sdl -fstrict-aliasing \
@@ -408,7 +408,7 @@ buildui() {
     echo $1
     mkdir -p $(dirname "../build/CMakeFiles/openrct2.dir/src/openrct2-ui/$1")
     emcc  -DNO_RCT2 -DOPENGL_NO_LINK -DOPENRCT2_BRANCH=\"develop\" -D__ENABLE_LIGHTFX__ -Dlibopenrct2_EXPORTS \
-        -I/usr/lib/x86_64-linux-gnu/libzip/include -I/usr/include/libpng12 \
+        -I/usr/local/include -I/usr/include/libpng12 \
         -stdlib=libc++ -std=gnu++14 -S -emit-llvm -O3 -fmax-type-align=1 \
         -DDISABLE_NETWORK=1 -DDISABLE_HTTP -DDISABLE_TWITCH -D__amd64__ -D__LINUX__ -D__linux__ -D_LIBCPP_HAS_MUSL_LIBC \
         -I../include -I../include/sdl -fstrict-aliasing -I../src -fstrict-aliasing \

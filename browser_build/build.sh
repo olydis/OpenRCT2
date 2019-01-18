@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-# check for emcc (tested with 1.37.22)
+# check for emcc (tested with 1.38.22)
 command -v emcc || echo ""
 command -v emcc || echo "!!!"
 command -v emcc || echo "'emcc' not found, please make sure it's on the \$PATH"

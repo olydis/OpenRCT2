@@ -107,7 +107,7 @@ namespace OpenRCT2 { namespace Ui
                 break;
             }
             default:
-                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "OpenRCT2", message.c_str(), window);
+                // SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "OpenRCT2", message.c_str(), window);
                 break;
             }
         }
