@@ -6,31 +6,42 @@
 
 extern "C"
 {
+    int32_t __atomic_fetch_add_4(int32_t* x, int32_t a) {
+        int32_t res = *x;
+        *x += a;
+        return res;
+    }
+    int32_t __atomic_fetch_sub_4(int32_t* x, int32_t a) {
+        int32_t res = *x;
+        *x -= a;
+        return res;
+    }
+
     void curl_global_cleanup()
     {
     }
 
     #define SpeexResamplerState void
-    SpeexResamplerState *speex_resampler_init(uint32_t nb_channels, 
-                                          uint32_t in_rate, 
-                                          uint32_t out_rate, 
+    SpeexResamplerState *speex_resampler_init(uint32_t nb_channels,
+                                          uint32_t in_rate,
+                                          uint32_t out_rate,
                                           int quality,
                                           int *err)
     {
         return (void*)42;
     }
 
-    int speex_resampler_set_rate(SpeexResamplerState *st, 
-                                uint32_t in_rate, 
+    int speex_resampler_set_rate(SpeexResamplerState *st,
+                                uint32_t in_rate,
                                 uint32_t out_rate)
     {
         return 0;
     }
 
-    int speex_resampler_process_interleaved_int(SpeexResamplerState *st, 
-                                                const int16_t *in, 
-                                                uint32_t *in_len, 
-                                                int16_t *out, 
+    int speex_resampler_process_interleaved_int(SpeexResamplerState *st,
+                                                const int16_t *in,
+                                                uint32_t *in_len,
+                                                int16_t *out,
                                                 uint32_t *out_len)
     {
         return 0;
@@ -38,7 +49,7 @@ extern "C"
 
     void speex_resampler_destroy(SpeexResamplerState *st)
     {
-        
+
     }
 
     // PATCH 1
